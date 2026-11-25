@@ -17,6 +17,8 @@ const config: Config = {
                 // 2xl: 1536px (default)
             },
             fontFamily: {
+                sans: ['var(--font-inter-tight)', 'Inter Tight', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                heading: ['Clash Display', 'var(--font-inter-tight)', 'sans-serif'],
                 bebas: ['Bebas Neue', 'sans-serif'],
                 roboto: ['Roboto', 'sans-serif'],
                 abeezee: ['ABeeZee', 'sans-serif'],

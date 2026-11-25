@@ -67,7 +67,7 @@ export default function Features({ setIsContactPopupOpen: _setIsContactPopupOpen
             benefits: ["Global Content Access", "Buffer-Free Streaming", "HD/4K Quality", "Platform Compatibility"]
         },
         {
-            image: "/images/person.png",
+            image: "/images/support.png",
             title: "24/7 EXPERT SUPPORT",
             description: "Round-the-clock technical support from VPN experts via live chat, email, and phone for instant assistance.",
             details: "Our dedicated support team of VPN specialists is available 24/7 to help with setup, troubleshooting, and optimization.",
@@ -120,7 +120,7 @@ export default function Features({ setIsContactPopupOpen: _setIsContactPopupOpen
             }}
             style={{ willChange: 'transform' }}
         >
-            <div className="relative h-48 md:h-56 overflow-hidden bg-gray-700">
+            <div className={`relative h-48 md:h-56 overflow-hidden ${feature.image.endsWith("support.png") ? "bg-black" : "bg-gray-700"}`}>
                 <Image
                     width={400}
                     height={300}

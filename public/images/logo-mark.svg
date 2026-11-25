@@ -1,0 +1,45 @@
+<svg width="256" height="256" viewBox="79 79 297 297" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="227.5" cy="227.5" r="98.5" fill="#FCFCFC"/>
+  <circle
+    cx="227.5"
+    cy="227.5"
+    r="93.5"
+    stroke="url(#logoMarkStrokeA)"
+    stroke-width="10"
+  />
+  <circle
+    cx="227.5"
+    cy="227.5"
+    r="93.5"
+    stroke="url(#logoMarkStrokeB)"
+    stroke-width="10"
+  />
+  <path
+    d="M209 183C209 182.448 209.448 182 210 182H245.83C246.382 182 246.83 182.448 246.83 183V194C246.83 194.552 246.382 195 245.83 195H224.3C223.748 195 223.3 195.448 223.3 196V219.35C223.3 219.902 223.748 220.35 224.3 220.35H240.76C241.312 220.35 241.76 220.798 241.76 221.35V232.35C241.76 232.902 241.312 233.35 240.76 233.35H224.3C223.748 233.35 223.3 233.798 223.3 234.35V272C223.3 272.552 222.852 273 222.3 273H210C209.448 273 209 272.552 209 272V183Z"
+    fill="black"
+  />
+  <defs>
+    <radialGradient
+      id="logoMarkStrokeA"
+      cx="0"
+      cy="0"
+      r="1"
+      gradientUnits="userSpaceOnUse"
+      gradientTransform="translate(128.5 227) scale(196)"
+    >
+      <stop offset="0.4" stop-color="#111288"/>
+      <stop offset="1" stop-color="#DC612F"/>
+    </radialGradient>
+    <linearGradient
+      id="logoMarkStrokeB"
+      x1="173.229"
+      y1="232"
+      x2="314.5"
+      y2="232"
+      gradientUnits="userSpaceOnUse"
+    >
+      <stop stop-color="#030266"/>
+      <stop offset="1" stop-color="#FF8C00"/>
+    </linearGradient>
+  </defs>
+</svg>
