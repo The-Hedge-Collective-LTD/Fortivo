@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import nodemailer from "nodemailer";
 import type SMTPTransport from "nodemailer/lib/smtp-transport";
-import { env } from "@/env";
+import { getSmtpConfig } from "@/lib/smtp";
 
 export async function POST(req: NextRequest) {
   const data = (await req.json()) as Record<string, unknown>;
@@ -18,7 +18,6 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Validate email format
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email)) {
     return NextResponse.json(
@@ -27,22 +26,33 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  const smtp = getSmtpConfig();
+  if (!smtp) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          "Email service is not configured. Please try again later or email us directly.",
+      },
+      { status: 503 },
+    );
+  }
+
   const transporter = nodemailer.createTransport({
-    host: env.SMTP_HOST,
-    port: env.SMTP_PORT,
-    secure: env.SMTP_SECURE,
+    host: smtp.host,
+    port: smtp.port,
+    secure: smtp.secure,
     auth: {
-      user: env.SMTP_USER,
-      pass: env.SMTP_PASS,
+      user: smtp.user,
+      pass: smtp.pass,
     },
   } as SMTPTransport.Options);
 
   try {
-    // Send email notification about account deletion request
     await transporter.sendMail({
-      from: `Fortivo Account Deletion <${env.SMTP_USER}>`,
+      from: `Fortivo Account Deletion <${smtp.user}>`,
       replyTo: email,
-      to: env.CONTACT_TO,
+      to: smtp.contactTo,
       subject: `[FortivoVPN Account Deletion Request] ${email}`,
       text:
         `A user has requested to delete their account.\n\n` +
@@ -65,16 +75,6 @@ export async function POST(req: NextRequest) {
         `<p style="color: #6b7280; font-size: 12px; margin-top: 30px;">Reply directly to this email to respond to the user.</p>` +
         `</div>`,
     });
-
-    // Here you would typically:
-    // 1. Validate the user exists in your database
-    // 2. Delete the user account and all associated data
-    // 3. Cancel any active subscriptions
-    // 4. Send confirmation email to the user
-
-    // For now, we're just sending a notification email.
-    // In a production environment, you would integrate with your user database/authentication system
-    // to actually delete the user account.
 
     return NextResponse.json({
       success: true,

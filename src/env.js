@@ -1,37 +1,26 @@
 import { createEnv } from "@t3-oss/env-nextjs";
 import { z } from "zod";
 
+/**
+ * SMTP / contact vars are optional at build time so Vercel can build
+ * without them. Contact + delete-user APIs validate them at runtime.
+ */
 export const env = createEnv({
-  /**
-   * Specify your server-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars.
-   */
   server: {
     NODE_ENV: z.enum(["development", "test", "production"]),
-    SMTP_HOST: z.string().min(1),
-    SMTP_PORT: z.coerce.number(),
+    SMTP_HOST: z.string().min(1).optional(),
+    SMTP_PORT: z.coerce.number().optional(),
     SMTP_SECURE: z
       .union([z.literal("true"), z.literal("false")])
-      .transform((v) => v === "true"),
-    SMTP_USER: z.string().min(1),
-    SMTP_PASS: z.string().min(1),
-    CONTACT_TO: z.string().email(),
-
+      .optional()
+      .transform((v) => (v === undefined ? undefined : v === "true")),
+    SMTP_USER: z.string().min(1).optional(),
+    SMTP_PASS: z.string().min(1).optional(),
+    CONTACT_TO: z.string().email().optional(),
   },
 
-  /**
-   * Specify your client-side environment variables schema here. This way you can ensure the app
-   * isn't built with invalid env vars. To expose them to the client, prefix them with
-   * `NEXT_PUBLIC_`.
-   */
-  client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
-  },
+  client: {},
 
-  /**
-   * You can't destruct `process.env` as a regular object in the Next.js edge runtimes (e.g.
-   * middlewares) or client-side so we need to destruct manually.
-   */
   runtimeEnv: {
     NODE_ENV: process.env.NODE_ENV,
     SMTP_HOST: process.env.SMTP_HOST,
@@ -39,17 +28,16 @@ export const env = createEnv({
     SMTP_SECURE: process.env.SMTP_SECURE,
     SMTP_USER: process.env.SMTP_USER,
     SMTP_PASS: process.env.SMTP_PASS,
-    CONTACT_TO: process.env.CONTACT_TO
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    CONTACT_TO: process.env.CONTACT_TO,
   },
+
   /**
-   * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
-   * useful for Docker builds.
+   * Skip validation during CI / Vercel builds when vars are not injected yet,
+   * or when SKIP_ENV_VALIDATION=1 is set.
    */
-  skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-  /**
-   * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
-   * `SOME_VAR=''` will throw an error.
-   */
+  skipValidation:
+    !!process.env.SKIP_ENV_VALIDATION ||
+    process.env.npm_lifecycle_event === "build",
+
   emptyStringAsUndefined: true,
 });
