@@ -125,12 +125,10 @@ export default function PricingView() {
               <article
                 key={plan.id}
                 className={`relative flex h-full flex-col rounded-2xl border bg-[#0b0e14] p-6 sm:p-7 ${
-                  emphasize || plan.popular
-                    ? "border-[#4A7BFF]"
-                    : "border-white/10"
+                  emphasize ? "border-[#4A7BFF]" : "border-white/10"
                 }`}
               >
-                {plan.popular && (
+                {emphasize && plan.popular && (
                   <span className="mb-4 inline-flex w-fit rounded-full bg-[#4A7BFF] px-3 py-1 text-[10px] font-bold tracking-[0.12em] text-white uppercase">
                     Most Popular
                   </span>

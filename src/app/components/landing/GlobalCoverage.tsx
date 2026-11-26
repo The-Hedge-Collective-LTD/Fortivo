@@ -76,8 +76,8 @@ export default function GlobalCoverage() {
           </Reveal>
           <Reveal mode="fade">
             <p className="text-sm text-slate-400 sm:text-right">
-              [Secure connections delivered through our global VPN
-              infrastructure]
+              Secure connections delivered through our global VPN
+              infrastructure
             </p>
           </Reveal>
         </div>
