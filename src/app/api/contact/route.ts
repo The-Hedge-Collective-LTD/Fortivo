@@ -1,54 +1,41 @@
-export const runtime = "nodejs";
+export const runtime = 'nodejs';
 
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
-import type SMTPTransport from "nodemailer/lib/smtp-transport";
-import { getSmtpConfig } from "@/lib/smtp";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
+import nodemailer from 'nodemailer';
+import type SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { env } from '@/env';
 
 export async function POST(req: NextRequest) {
-  const data = (await req.json()) as Record<string, unknown>;
-  const name = typeof data.name === "string" ? data.name : "";
-  const email = typeof data.email === "string" ? data.email : "";
-  const subject = typeof data.subject === "string" ? data.subject : "";
-  const message = typeof data.message === "string" ? data.message : "";
-  const inquiryType =
-    typeof data.inquiryType === "string" ? data.inquiryType : "general";
+  const data = await req.json() as Record<string, unknown>;
+  const name = typeof data.name === 'string' ? data.name : '';
+  const email = typeof data.email === 'string' ? data.email : '';
+  const subject = typeof data.subject === 'string' ? data.subject : '';
+  const message = typeof data.message === 'string' ? data.message : '';
+  const inquiryType = typeof data.inquiryType === 'string' ? data.inquiryType : 'general';
 
   if (!name || !email || !subject || !message) {
     return NextResponse.json(
-      { success: false, message: "Missing required fields." },
-      { status: 400 },
-    );
-  }
-
-  const smtp = getSmtpConfig();
-  if (!smtp) {
-    return NextResponse.json(
-      {
-        success: false,
-        message:
-          "Email service is not configured. Please try again later or email us directly.",
-      },
-      { status: 503 },
+      { success: false, message: 'Missing required fields.' },
+      { status: 400 }
     );
   }
 
   const transporter = nodemailer.createTransport({
-    host: smtp.host,
-    port: smtp.port,
-    secure: smtp.secure,
+    host: env.SMTP_HOST,
+    port: env.SMTP_PORT,
+    secure: env.SMTP_SECURE,
     auth: {
-      user: smtp.user,
-      pass: smtp.pass,
+      user: env.SMTP_USER,
+      pass: env.SMTP_PASS,
     },
   } as SMTPTransport.Options);
 
   try {
     await transporter.sendMail({
-      from: `Fortivo Contact <${smtp.user}>`,
-      replyTo: `${name} <${email}>`,
-      to: smtp.contactTo,
+      from: `Fortivo Contact <${email}>`, // Always send from SMTP_USER
+      replyTo: `${name} <${email}>`, // Reply-To set to user's email
+      to: env.CONTACT_TO,
       subject: `[FortivoVPN Contact] ${subject}`,
       text:
         `You have received a new message from the contact form.\n` +
@@ -62,14 +49,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       message:
-        "Thank you for contacting FortivoVPN! Our security experts will get back to you within 24 hours.",
+        'Thank you for contacting FortivoVPN! Our security experts will get back to you within 24 hours.',
     });
   } catch (error: unknown) {
     const errorMessage =
-      error instanceof Error ? error.message : "Failed to send message.";
+      error instanceof Error ? error.message : 'Failed to send message.';
     return NextResponse.json(
       { success: false, message: errorMessage },
-      { status: 500 },
+      { status: 500 }
     );
   }
 }

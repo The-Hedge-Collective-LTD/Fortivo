@@ -8,27 +8,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-inter-tight), "Inter Tight", ui-sans-serif, system-ui,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
-  --font-heading: "Clash Display", var(--font-inter-tight), sans-serif;
-}
-
-.font-heading {
-  font-family: var(--font-heading);
-}
-
-.font-body {
-  font-family: var(--font-sans);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .font-abeezee {
@@ -209,104 +190,6 @@ h6 {
 
 .animate-fade-in {
   animation: fade-in 0.6s ease-out forwards;
-}
-
-@keyframes hero-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-hero-marquee {
-  animation: hero-marquee 45s linear infinite;
-  will-change: transform;
-}
-
-/* Show 1 card on mobile, 2 on tablet, 3 on desktop */
-.hero-carousel-viewport {
-  width: min(280px, 85vw);
-}
-
-@media (min-width: 640px) {
-  .hero-carousel-viewport {
-    width: calc(2 * 300px + 20px);
-  }
-}
-
-@media (min-width: 768px) {
-  .hero-carousel-viewport {
-    width: calc(3 * 340px + 2 * 20px);
-  }
-}
-
-@keyframes steps-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-steps-marquee {
-  animation: steps-marquee 28s linear infinite;
-  will-change: transform;
-}
-
-@keyframes coverage-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-.animate-coverage-marquee {
-  animation: coverage-marquee 32s linear infinite;
-  will-change: transform;
-}
-
-/* Right-half viewport: show one step card (with slight peek on large screens) */
-.steps-carousel-viewport {
-  width: 100%;
-  max-width: min(340px, 100%);
-}
-
-@media (min-width: 1024px) {
-  .steps-carousel-viewport {
-    max-width: 100%;
-    width: 100%;
-  }
-}
-
-/* Soft feathered left edge — cards fade out instead of hard clip */
-.steps-carousel-fade {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 8%,
-    #000 22%,
-    #000 100%
-  );
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(0, 0, 0, 0.35) 8%,
-    #000 22%,
-    #000 100%
-  );
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .animate-hero-marquee,
-  .animate-steps-marquee,
-  .animate-coverage-marquee {
-    animation: none;
-  }
 }
 
 html {

@@ -64,7 +64,7 @@ export default function Team() {
     {
       id: "privacy-advocate",
       title: "PRIVACY ADVOCATE",
-      image: "/images/scales.png",
+      image: "/images/person.png",
       description:
         "Our Privacy Advocates are the voice of digital rights and user protection. They ensure our zero-log policy remains absolute, lead transparency initiatives, and work with legal experts to maintain our commitment to user privacy. They bridge the gap between technology and human rights in the digital age.",
       skills: [
@@ -234,13 +234,12 @@ export default function Team() {
                     <div
                       className={`h-40 w-40 overflow-hidden rounded-full border-4 border-transparent bg-gradient-to-br md:h-56 md:w-56 ${member.gradient} p-1 shadow-2xl`}
                     >
-                      <div className="h-full w-full overflow-hidden rounded-full bg-black">
+                      <div className="h-full w-full overflow-hidden rounded-full bg-gray-900">
                         <Image
                           src={member.image}
                           alt={member.title}
                           width={224}
                           height={224}
-                          unoptimized={member.image.endsWith(".png")}
                           className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-110"
                         />
                       </div>
