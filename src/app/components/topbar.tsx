@@ -90,6 +90,13 @@ export default function Topbar() {
             </Link>
             <Link
               className="group relative text-xs font-medium tracking-wide text-gray-300 decoration-blue-400 decoration-2 underline-offset-4 duration-300 hover:text-blue-400 hover:underline md:text-sm"
+              href="/pricing"
+            >
+              <span className="relative z-10">PRICING</span>
+              <div className="absolute inset-0 -z-10 scale-0 rounded-lg bg-blue-500/10 transition-transform duration-300 group-hover:scale-100"></div>
+            </Link>
+            <Link
+              className="group relative text-xs font-medium tracking-wide text-gray-300 decoration-blue-400 decoration-2 underline-offset-4 duration-300 hover:text-blue-400 hover:underline md:text-sm"
               href="/#team"
             >
               <span className="relative z-10">TEAM</span>
@@ -195,7 +202,7 @@ export default function Topbar() {
               </Link>
               <Link
                 className="flex items-center gap-3 border-b border-gray-700/50 px-6 py-5 text-lg font-medium text-gray-300 transition-all duration-300 last:border-b-0 hover:bg-blue-500/10 hover:text-blue-400 active:bg-blue-500/20"
-                href="/#pricing"
+                href="/pricing"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <svg
